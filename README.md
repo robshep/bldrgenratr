@@ -2,8 +2,54 @@ bldrgenratr
 ===========
 
 BldrGenratr is a tool to automatically create domain class builders with a "fluent" API
+It comes as a maven plugin to process packages of "lite" domain classes and make builder code 
+automatically.
 
-Say you have this the following Java domain class....
+It's automatic so you can fiddle with the domain class and the bldr is regenerated, so you don't need to maintain another source file :)
+
+Then you can make test fixtures like this.....
+
+
+AwesomeTest.java
+---------------
+
+    package com.mycompany.mypackage.app;
+    
+    public class AwesomeTest()
+    {
+        @Test
+        public void testSomethingWithFixture()
+        {
+            User u = UserBldr.nu()
+                         .withEmail("me@mycorp.com")
+                         .withFullName("The Dude")
+                     .get();
+
+            someRepo.save(u);
+            
+            
+            /*
+             *  the next implementation will include sub-Bldrs
+             *  ... as follows.
+             */ 
+            
+            User u2 = UserBldr.nu()
+                         .withEmail("you@mycorp.com")
+                         .withFullName("Nuva Dude")
+                         .withAddress( AddressBldr.nu()
+                                         .withLine1("1 my street")
+                                         .withLine2("My Town")
+                                         .withZip("ABC 123") )
+                     .get();
+
+            someRepo.save(u2);
+        }
+    }
+
+
+
+
+So say you have this the following Java domain class....
 
 User.java
 ---------
@@ -20,6 +66,9 @@ User.java
     }
     
 
+
+
+
 BldrGenratr will make the following....
 
 _bldr.UserBldr.java
@@ -33,7 +82,7 @@ _bldr.UserBldr.java
     public class UserBldr
     {
       protected com.f5space.mainstack.entity.User ting;
-	   
+       
       public UserBldr withEmail(java.lang.String arg0) { 
         ting.setEmail(arg0); 
         return this; 
@@ -56,37 +105,3 @@ _bldr.UserBldr.java
         return ting;
       }
     }
-    
-Then you can do this....
-
-AwesomeApp.java
----------------
-
-    package com.mycompany.mypackage.app;
-    
-    public class MyApp()
-    {
-        public static void main(String[] args)
-        {
-            User u = UserBldr.nu()
-                         .withEmail("me@mycorp.com")
-                         .withFullName("The Dude")
-                     .get();
-            
-            
-            // this next implementation will include sub-Bldrs
-            
-            //e.g.
-            
-            User u = UserBldr.nu()
-                         .withEmail("me@mycorp.com")
-                         .withFullName("The Dude")
-                         .withAddress( AddressBldr.nu()
-                                         .withLine1("1 my street")
-                                         .withLine2("My Town")
-                                         .withZip("ABC 123") )
-                     .get();
-            
-            
- 
-
