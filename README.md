@@ -81,7 +81,7 @@ _bldr.UserBldr.java
     */
     public class UserBldr
     {
-      protected com.f5space.mainstack.entity.User ting;
+      protected com.mycompany.mypackage.User ting;
        
       public UserBldr withEmail(java.lang.String arg0) { 
         ting.setEmail(arg0); 
