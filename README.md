@@ -29,8 +29,7 @@ AwesomeTest.java
             
             
             /*
-             *  the next implementation will include sub-Bldrs
-             *  ... as follows.
+             *  you can also nest Bldrs naturally, as follows.
              */ 
             
             User u2 = UserBldr.nu()
