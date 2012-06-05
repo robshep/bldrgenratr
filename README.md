@@ -2,21 +2,14 @@ bldrgenratr
 ===========
 
 BldrGenratr is a tool to automatically create domain class builders with a "fluent" API
-It comes as a maven plugin to process packages of "lite" domain classes and make builder code 
-automatically.
+It comes as a maven plugin to process packages of "lite" domain classes and generates A "builder" automatically.
 
-It's automatic so you can fiddle with the domain class and the bldr is regenerated, so you don't need to maintain another source file :)
 
 Then you can make test fixtures like this.....
 
-
 AwesomeTest.java
 ---------------
-
-    package com.mycompany.mypackage.app;
-    
-    public class AwesomeTest()
-    {
+    ....
         @Test
         public void testSomethingWithFixture()
         {
@@ -43,9 +36,15 @@ AwesomeTest.java
 
             someRepo.save(u2);
         }
-    }
+        ....
+    
 
+It doesn't need annotations, so you could 'Bldr' on other people's domain classes.  
+You can keep your Domain classes anemic and have them all nice and JavaBean compliant (I.e. void setters), 
+but still have a Builder waiting patiently for you, to unleash some domain bldr-fu when you need fixtures - and fast!
 
+It's automatic so you can fiddle with the domain class and the bldr is regenerated, erm hopefully - it's a small manual step at present.
+so you don't need to maintain another source file :)
 
 
 So say you have this the following Java domain class....
@@ -65,7 +64,8 @@ User.java
     }
     
 
-
+That looks boring, and you just can't be bothered to hack out more rafts of textfixtures, using this long winded approach.
+Man, I wish I could just use groovy :) but if that's not the case, just plugin some bldrgenratr
 
 
 BldrGenratr will make the following....
