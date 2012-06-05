@@ -98,28 +98,36 @@ public class Bldr extends AbstractMojo
         	
         	for(PropertyDescriptor desc : pub.getPropertyDescriptors(clazz))
         	{
-        		System.out.println(desc);
         		if(desc.getName().equals("class")){ continue; }
         		
-        		System.out.println(desc.getName());
-        		
         		BldProp prop = new BldProp();
-        		System.out.println(desc.getWriteMethod());
         		prop.setMethodName = desc.getWriteMethod().getName();
         		
         		StringBuilder argSpec = new StringBuilder();
         		StringBuilder argList = new StringBuilder();
-        		ArrayIterator ai = new ArrayIterator(desc.getWriteMethod().getParameterTypes());
-        		int i=0;
-        		while( ai.hasNext() ) {
-        			argSpec.append(((Class<?>)ai.next()).getCanonicalName());
-        			argSpec.append(" ").append("arg").append(i);
-        			argList.append("arg").append(i);
-        			if(ai.hasNext()) {
-        				argSpec.append(", ");
-        				argList.append(", ");
-        			}
-        			i++;
+        		
+        		if(desc.getWriteMethod().getParameterTypes().length == 1) 
+        		{
+        			Class<?> argType = desc.getWriteMethod().getParameterTypes()[0];
+        			
+        			argSpec.append(argType.getCanonicalName());
+        			argSpec.append(" ");
+        			argSpec.append(desc.getName());
+        			argList.append(desc.getName());
+        		}
+        		else {
+	        		ArrayIterator ai = new ArrayIterator(desc.getWriteMethod().getParameterTypes());
+	        		int i=0;
+	        		while( ai.hasNext() ) {
+	        			argSpec.append(((Class<?>)ai.next()).getCanonicalName());
+	        			argSpec.append(" ").append("arg").append(i);
+	        			argList.append("arg").append(i);
+	        			if(ai.hasNext()) {
+	        				argSpec.append(", ");
+	        				argList.append(", ");
+	        			}
+	        			i++;
+	        		}
         		}
         		
         		prop.propArgsSpec = argSpec.toString();
@@ -139,7 +147,6 @@ public class Bldr extends AbstractMojo
         	
         	
         	try {
-        		System.out.println(classFile.getAbsolutePath());
         		classFile.createNewFile();
 				BufferedWriter bw = new BufferedWriter(new FileWriter(classFile));
 				
