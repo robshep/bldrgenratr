@@ -64,7 +64,7 @@ User.java
     }
     
 
-That looks boring, and you just can't be bothered to hack out more rafts of textfixtures, using this long winded approach.
+That looks boring, and you just can't be bothered to hack out more rafts of test fixtures, using this long winded approach.
 Man, I wish I could just use groovy :) but if that's not the case, just plugin some bldrgenratr
 
 
